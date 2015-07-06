@@ -28,7 +28,7 @@
 
 (cl-defstruct (ob:backend:org
 	       (:include ob:backend))
-  (articles-filter  "+TODO=\"DONE\"")
+  (articles-filter  "Post")
   (pages-filter "+PAGE={.+\.html}")
   (snippets-filter "+SNIPPET={.+}"))
 
@@ -96,7 +96,7 @@ headers and body."
 
 (defun ob:org:get-tags-list ()
   "Return a list of ob:tags from org tags defined at point"
-  (loop for tn in (org-get-local-tags)
+  (loop for tn in (remove "Post" (org-get-local-tags))
 	for td = (ob:replace-in-string tn '(("_" " ") ("@" "-")))
 	collect (make-ob:tag td)))
 
